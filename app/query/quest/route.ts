@@ -1,13 +1,19 @@
 import { NextResponse } from 'next/server'
 
-const corsHeaders = {
+export const config = {
+  runtime: 'edge',
+}
+
+const responseHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Content-Type': 'application/json',
+  'cache-control': 'public, s-maxage=1200, stale-while-revalidate=600',
 }
 
 export async function OPTIONS() {
-  return NextResponse.json({}, { headers: corsHeaders })
+  return NextResponse.json({}, { headers: responseHeaders })
 }
 
 export async function POST(request: Request) {
@@ -26,5 +32,5 @@ export async function POST(request: Request) {
 
   const queryResponseJSON: any = await response.json()
 
-  return NextResponse.json(queryResponseJSON, { headers: corsHeaders })
+  return NextResponse.json(queryResponseJSON, { headers: responseHeaders })
 }
