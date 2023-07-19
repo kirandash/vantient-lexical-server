@@ -52,3 +52,17 @@ curl 'https://vantient-lexical-server.vercel.app/query/quest' \
   --data-raw '{"_k":"Quest/5JJaVaNjfOvxcGDvJZzQkYMaexkElGhW"}' \
   --compressed
 ```
+
+### Performance
+
+#### Edge API routes
+
+For better performance, the API route is using [Edge API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes#edge-api-routes)
+
+#### Cache
+
+```
+'cache-control': 'public, s-maxage=1200, stale-while-revalidate=600',
+```
+
+Added [cache](https://nextjs.org/docs/pages/building-your-application/routing/api-routes#cache-control) for 20 minutes, and stale-while-revalidate for 10 minutes.
