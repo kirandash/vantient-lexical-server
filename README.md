@@ -1,8 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## API wrapper for CMTY space
 
-## Getting Started
-
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
@@ -12,23 +10,45 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Sample Usage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### JavaScript
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```js
+fetch('https://vantient-lexical-server.vercel.app/query/quest', {
+  body: JSON.stringify({
+    _k: `Quest/${questID}`,
+  }),
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  method: 'POST',
+})
+  .then((response) => response.json())
+  .then(({ data }) => {
+    const { quest } = data
+    if (!quest) return
+    console.log(quest)
+  })
+```
 
-## Learn More
+#### cURL
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```sh
+curl 'https://vantient-lexical-server.vercel.app/query/quest' \
+  -H 'authority: vantient-lexical-server.vercel.app' \
+  -H 'accept: */*' \
+  -H 'accept-language: en-IN,en-GB;q=0.9,en-US;q=0.8,en;q=0.7' \
+  -H 'content-type: application/json' \
+  -H 'origin: http://localhost:3000' \
+  -H 'referer: http://localhost:3000/' \
+  -H 'sec-ch-ua: "Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "macOS"' \
+  -H 'sec-fetch-dest: empty' \
+  -H 'sec-fetch-mode: cors' \
+  -H 'sec-fetch-site: cross-site' \
+  -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36' \
+  --data-raw '{"_k":"Quest/5JJaVaNjfOvxcGDvJZzQkYMaexkElGhW"}' \
+  --compressed
+```
