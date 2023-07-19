@@ -1,4 +1,14 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
+
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+export async function OPTIONS(req: NextRequest) {
+  return NextResponse.json({}, { headers: corsHeaders })
+}
 
 export async function POST(request: Request) {
   const req = await request.json()
@@ -16,5 +26,5 @@ export async function POST(request: Request) {
 
   const queryResponseJSON: any = await response.json()
 
-  return NextResponse.json(queryResponseJSON)
+  return NextResponse.json(queryResponseJSON, { headers: corsHeaders })
 }
